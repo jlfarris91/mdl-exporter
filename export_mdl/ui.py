@@ -324,9 +324,8 @@ class WAR3_PT_particle_editor_panel(Panel):
             layout.prop(psys, "gravity")
             layout.prop(psys, "variation")
             layout.prop(psys, "latitude")
-            
-            if psys.tail == True:
-                layout.prop(psys, "tail_length")
+
+            layout.prop(psys, "tail_length")
             
             layout.separator()
             
