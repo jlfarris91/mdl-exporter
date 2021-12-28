@@ -424,6 +424,7 @@ class WAR3_PT_particle_editor_panel(Panel):
             col.prop(psys, "unfogged")
             col.prop(psys, "line_emitter")
             col.prop(psys, "sort_far_z")
+            col.prop(psys, "squirt")
             col = row.column()
             col.prop(psys, "model_space")
             col.prop(psys, "xy_quad")

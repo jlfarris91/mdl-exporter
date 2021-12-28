@@ -408,6 +408,12 @@ class War3ParticleSystemProperties(PropertyGroup):
         default = False    
         )
         
+    squirt : BoolProperty(
+        name = "Squirt",
+        description = "If true, particles will spawn only when emitted.",
+        default = False    
+        )
+        
     head : BoolProperty(
         name = "Head",
         description = "Whether or not to render the head of the particle.",

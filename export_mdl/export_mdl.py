@@ -520,7 +520,10 @@ def save(operator, context, settings, filepath="", mdl_version=800):
             visibility = psys.visibility
             if visibility is not None:
                 visibility.write_mdl("Visibility", fw, model.global_seqs, "\t") # write_anim(visibility, "Visibility", fw, global_seqs, "\t", True)
-                
+            
+            if emitter.squirt:
+                fw("\tSquirt,\n")
+
             fw("\tLifeSpan %s,\n" % f2s(rnd(emitter.life_span)))
                 
             if psys.emission_rate_anim is not None:

@@ -450,6 +450,7 @@ class WAR3_OT_emitter_preset_add(AddPresetBase, Operator):
         "psys.sort_far_z",
         "psys.model_space",
         "psys.xy_quad",
+        "psys.squirt",
         ]
 
     # where to store the preset

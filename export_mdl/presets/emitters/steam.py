@@ -47,3 +47,4 @@ psys.line_emitter = False
 psys.sort_far_z = False
 psys.model_space = False
 psys.xy_quad = False
+psys.squirt = False
