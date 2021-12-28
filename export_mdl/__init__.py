@@ -16,6 +16,11 @@
 #
 # ##### END GPL LICENSE BLOCK #####
 
+#!/bin/python
+
+import sys
+sys.dont_write_bytecode = True
+
 bl_info = {
     "name": "MDL Exporter", 
     "author": "Kalle Halvarsson",
@@ -25,15 +30,17 @@ bl_info = {
     "category": "Import-Export"} 
 
 
-if "bpy" in locals():
-  import imp
-  imp.reload(properties)
-  imp.reload(operators)
-  imp.reload(classes)
-  imp.reload(export_mdl)
-  imp.reload(ui)
-else:
-  from . import properties, operators, classes, export_mdl, ui
+# if "bpy" in locals():
+#   import imp
+#   imp.reload(properties)
+#   imp.reload(operators)
+#   imp.reload(classes)
+#   imp.reload(export_mdl)
+#   imp.reload(ui)
+# else:
+#   from . import properties, operators, classes, export_mdl, ui
+
+from . import properties, operators, classes, export_mdl, ui
 
 import bpy
 import os
