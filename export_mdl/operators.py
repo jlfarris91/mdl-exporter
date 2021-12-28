@@ -78,9 +78,11 @@ class WAR3_OT_export_mdl(Operator, ExportHelper):
         filepath = bpy.path.ensure_ext(filepath, self.filename_ext)
         
         settings = War3ExportSettings()
-        settings.global_matrix = axis_conversion(to_forward=self.axis_forward,
+        settings.global_matrix_unscaled = axis_conversion(to_forward=self.axis_forward,
                                  to_up=self.axis_up,
-                                 ).to_4x4() @ Matrix.Scale(self.global_scale, 4)
+                                 ).to_4x4()
+
+        settings.global_matrix = settings.global_matrix_unscaled @ Matrix.Scale(self.global_scale, 4)
                                  
         settings.use_selection = self.use_selection
         settings.optimize_animation = self.optimize_animation

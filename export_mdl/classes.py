@@ -17,6 +17,7 @@ from .utils import *
 
 class War3ExportSettings:
     def __init__(self):
+        self.global_matrix_unscaled = Matrix()
         self.global_matrix = Matrix()
         self.use_selection = False
         self.optimize_animation = False
@@ -190,6 +191,9 @@ class War3Model:
                             
                         if bone.anim_rot is not None:
                             bone.anim_rot.transform_rot(settings.global_matrix)
+
+                        if bone.anim_scale is not None:
+                            bone.anim_loc.transform_vec(settings.global_matrix_unscaled)
                         
                         bone.billboarded = billboarded
                         bone.billboard_lock = billboard_lock
@@ -284,8 +288,12 @@ class War3Model:
                         self.register_global_sequence(bone.anim_rot)
                         bone.anim_rot.transform_rot(obj.matrix_world.inverted())
                         bone.anim_rot.transform_rot(settings.global_matrix)
-                        
-                    self.register_global_sequence(bone.anim_scale)
+
+                    if bone.anim_scale is not None:
+                        self.register_global_sequence(bone.anim_scale)
+                        bone.anim_scale.transform_vec(obj.matrix_world.inverted())
+                        bone.anim_scale.transform_vec(settings.global_matrix_unscaled)
+
                     bone.billboarded = billboarded
                     bone.billboard_lock = billboard_lock
                     if geoset_anim is not None:
@@ -404,14 +412,17 @@ class War3Model:
                     if bone.anim_loc is not None:
                         self.register_global_sequence(bone.anim_loc)
                         bone.anim_loc.transform_vec(obj.matrix_world.inverted())
-                        # if obj.parent is not None:
-                        #     bone.anim_loc.transform_vec(obj.parent.matrix_world.inverted())
                         bone.anim_loc.transform_vec(settings.global_matrix)
                         
                     if bone.anim_rot is not None:
                         self.register_global_sequence(bone.anim_rot)
                         bone.anim_rot.transform_rot(obj.matrix_world.inverted())
                         bone.anim_rot.transform_rot(settings.global_matrix)
+
+                    if bone.anim_scale is not None:
+                        self.register_global_sequence(bone.anim_scale)
+                        bone.anim_scale.transform_vec(obj.matrix_world.inverted())
+                        bone.anim_scale.transform_vec(settings.global_matrix_unscaled)
                         
                     bone.billboarded = billboarded
                     bone.billboard_lock = billboard_lock
@@ -472,8 +483,6 @@ class War3Model:
                     if settings.optimize_animation and bone.anim_scale is not None:
                         bone.anim_scale.optimize(settings.optimize_tolerance, self.sequences)
                     
-                    self.register_global_sequence(bone.anim_scale)
-                    
                     if bone.anim_loc is not None:
                         m = obj.matrix_world @ b.bone.matrix_local
                         bone.anim_loc.transform_vec(settings.global_matrix @ m.to_3x3().to_4x4())
@@ -485,6 +494,11 @@ class War3Model:
                         bone.anim_rot.transform_rot(mat_pose_ws)
                         bone.anim_rot.transform_rot(settings.global_matrix)
                         self.register_global_sequence(bone.anim_rot)
+
+                    if bone.anim_scale is not None:
+                        self.register_global_sequence(bone.anim_scale)
+                        m = obj.matrix_world @ b.bone.matrix_local
+                        bone.anim_scale.transform_vec(settings.global_matrix_unscaled @ m.to_3x3().to_4x4())
                     
                     self.objects['bone'].add(bone)
                     
@@ -795,7 +809,7 @@ class War3AnimationCurve:
                 value = fcurves[key].evaluate(frame)
                 values.append(value * scale)
                 
-                if 'color' in data_path:
+                if self.type == 'Color':
                     values = values[::-1] # Colors are stored in reverse
                     
                 if 'hide_render' in data_path:
