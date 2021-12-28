@@ -72,6 +72,17 @@ def get_sequence_end(self):
     # active_sequence = scene.mdl_sequences[scene.mdl_sequence_index]
     return max(tuple(m.frame for m in scene.timeline_markers if m.name == self.name))
     
+def on_mdl_sequence_index_changed(self, context):
+    scene = context.scene
+    sequences = getattr(scene, "mdl_sequences", None)
+    index = getattr(scene, "mdl_sequence_index", None)
+    if sequences is not None and len(sequences):
+        active_sequence = sequences[index]
+        context.scene.frame_preview_start = active_sequence.start
+        context.scene.frame_preview_end = active_sequence.end
+        if context.scene.frame_current < context.scene.frame_preview_start or context.scene.frame_current > context.scene.frame_preview_end:
+            context.scene.frame_current = context.scene.frame_preview_start
+
 class War3SequenceProperties(PropertyGroup):
 
     # Backing field
@@ -120,7 +131,7 @@ class War3SequenceProperties(PropertyGroup):
     @classmethod
     def register(cls):
         bpy.types.Scene.mdl_sequences = CollectionProperty(type=War3SequenceProperties, options={'HIDDEN'})
-        bpy.types.Scene.mdl_sequence_index = IntProperty(name="Sequence index", description="", default=0, options={'HIDDEN'}) 
+        bpy.types.Scene.mdl_sequence_index = IntProperty(name="Sequence index", description="", default=0, options={'HIDDEN'}, update=on_mdl_sequence_index_changed) 
         bpy.types.WindowManager.mdl_sequence_refreshing = BoolProperty(name="sequence refreshing", description="", default=False, options={'HIDDEN'})
         
         if sequence_changed_handler not in bpy.app.handlers.depsgraph_update_post:
