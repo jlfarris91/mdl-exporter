@@ -189,8 +189,8 @@ class War3Model:
                         if bone.anim_loc is not None:
                             bone.anim_loc.transform_vec(settings.global_matrix)
                             
-                        if bone.anim_rot is not None:
-                            bone.anim_rot.transform_rot(settings.global_matrix)
+                        #if bone.anim_rot is not None:
+                        #    bone.anim_rot.transform_rot(settings.global_matrix)
 
                         if bone.anim_scale is not None:
                             bone.anim_loc.transform_vec(settings.global_matrix_unscaled)
@@ -286,8 +286,8 @@ class War3Model:
                         
                     if bone.anim_rot is not None:
                         self.register_global_sequence(bone.anim_rot)
-                        bone.anim_rot.transform_rot(obj.matrix_world.inverted())
-                        bone.anim_rot.transform_rot(settings.global_matrix)
+                        #bone.anim_rot.transform_rot(obj.matrix_world.inverted())
+                        #bone.anim_rot.transform_rot(settings.global_matrix)
 
                     if bone.anim_scale is not None:
                         self.register_global_sequence(bone.anim_scale)
@@ -416,8 +416,8 @@ class War3Model:
                         
                     if bone.anim_rot is not None:
                         self.register_global_sequence(bone.anim_rot)
-                        bone.anim_rot.transform_rot(obj.matrix_world.inverted())
-                        bone.anim_rot.transform_rot(settings.global_matrix)
+                        #bone.anim_rot.transform_rot(obj.matrix_world.inverted())
+                        #bone.anim_rot.transform_rot(settings.global_matrix)
 
                     if bone.anim_scale is not None:
                         self.register_global_sequence(bone.anim_scale)
@@ -448,9 +448,9 @@ class War3Model:
                     
                 if root.anim_rot is not None:
                     self.register_global_sequence(root.anim_rot)
-                    if obh.parent is not None:
-                        root.anim_rot.transform_rot(obj.parent.matrix_world.inverted())
-                    root.anim_rot.transform_rot(settings.global_matrix)
+                    #if obh.parent is not None:
+                    #    root.anim_rot.transform_rot(obj.parent.matrix_world.inverted())
+                    #root.anim_rot.transform_rot(settings.global_matrix)
                 
                 root.visibility = visibility
                 self.register_global_sequence(visibility)
@@ -489,10 +489,10 @@ class War3Model:
                         self.register_global_sequence(bone.anim_loc)
                         
                     if bone.anim_rot is not None:
-                        mat_pose_ws = obj.matrix_world @ b.bone.matrix_local
-                        mat_rest_ws = obj.matrix_world @ b.matrix
-                        bone.anim_rot.transform_rot(mat_pose_ws)
-                        bone.anim_rot.transform_rot(settings.global_matrix)
+                        #mat_pose_ws = obj.matrix_world @ b.bone.matrix_local
+                        #mat_rest_ws = obj.matrix_world @ b.matrix
+                        #bone.anim_rot.transform_rot(mat_pose_ws)
+                        #bone.anim_rot.transform_rot(settings.global_matrix)
                         self.register_global_sequence(bone.anim_rot)
 
                     if bone.anim_scale is not None:
